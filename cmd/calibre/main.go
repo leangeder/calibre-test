@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
-	"github.com/leangeder/calibre/pkg/server/router"
+	"github.com/leangeder/calibre-test/pkg/net/router"
 )
 
 // // The new router function creates the router and
@@ -39,6 +40,6 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
 
-// func handler(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Fprintf(w, "Hello World!")
-// }
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello World!")
+}

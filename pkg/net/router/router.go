@@ -5,7 +5,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/leangeder/calibre/pkg/server/handler"
+	"github.com/leangeder/calibre-test/pkg/core/account"
+	"github.com/leangeder/calibre-test/pkg/core/book"
+	"github.com/leangeder/calibre-test/pkg/net/handler"
 )
 
 func loggingMiddleware(next http.Handler) http.Handler {
@@ -27,10 +29,10 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/", handler.Test).Methods("GET")
 
 	apiVersion := "/api/v1"
-	// // Route for Books
-	// r.HandleFunc(apiVersion+"/accounts/{name}", accounts.Get).Methods("GET")
-	// r.HandleFunc(apiVersion+"/accounts/{name}/books", books.List).Methods("GET")
-	// r.HandleFunc(apiVersion+"/accounts", accounts.List).Methods("GET")
+	// Route for Books
+	r.HandleFunc(apiVersion+"/accounts/{id}", account.GetAccount).Methods("GET")
+	r.HandleFunc(apiVersion+"/accounts/{id}/books", book.GetBooksPerAccount).Methods("GET")
+	r.HandleFunc(apiVersion+"/accounts", account.GetAccounts).Methods("GET")
 
 	// r.HandleFunc(apiVersion+"/users", users.Add).Methods("POST")
 	// r.HandleFunc(apiVersion+"/users", users.List).Methods("GET")
@@ -42,13 +44,14 @@ func NewRouter() *mux.Router {
 	// r.HandleFunc(apiVersion+"/users/me/avatar/pick", account.Get).Methods("POST")
 	// r.HandleFunc(apiVersion+"/users/register", account.Get).Methods("POST")
 
-	r.HandleFunc(apiVersion+"/books", account.Get).Methods("POST")
-	r.HandleFunc(apiVersion+"/books/{id}", account.Update).Methods("PUT")
-	r.HandleFunc(apiVersion+"/books/{id}", account.Delete).Methods("POST")
-	r.HandleFunc(apiVersion+"/books/{id}", account.Get).Methods("POST")
-	r.HandleFunc(apiVersion+"/books/categories", account.Get).Methods("POST")
-	r.HandleFunc(apiVersion+"/books/licences", account.Get).Methods("POST")
-	r.HandleFunc(apiVersion+"/books/languages", account.Get).Methods("POST")
+	r.HandleFunc(apiVersion+"/books", book.GetBooks).Methods("GET")
+	r.HandleFunc(apiVersion+"/books/{id}", book.GetBook).Methods("GET")
+	r.HandleFunc(apiVersion+"/books/categories", book.GetCategories).Methods("GET")
+	r.HandleFunc(apiVersion+"/books/categories/{id}", book.GetBooksPerCategorie).Methods("GET")
+	r.HandleFunc(apiVersion+"/books/licences", book.GetLicences).Methods("GET")
+	r.HandleFunc(apiVersion+"/books/licences/{id}", book.GetBooksPerLicence).Methods("GET")
+	r.HandleFunc(apiVersion+"/books/languages", book.GetLanguages).Methods("GET")
+	r.HandleFunc(apiVersion+"/books/languages/{id}", book.GetBooksPerLanguage).Methods("GET")
 
 	r.Use(loggingMiddleware)
 	return r
